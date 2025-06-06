@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
+interface YouTubeFeedProps {
+  apiKey: string;
+  channelId: string;
+}
+
 interface Video {
   id: { videoId: string };
   snippet: {
@@ -9,16 +14,14 @@ interface Video {
   };
 }
 
-const googleAPIKey = 'AIzaSyBQBUaE1kg21VRKzINGy1iTKewvOFs2VwQ';
-const strzyzewskiChannelId = 'UCI_J08LFR7uZrQ_h3Mtf4ZQ';
-const URL = `https://www.googleapis.com/youtube/v3/search?key=${googleAPIKey}&channelId=${strzyzewskiChannelId}&part=snippet&order=date&maxResults=10`
-
-const YouTubeFeed = () => {
+const YouTubeFeed: React.FC<YouTubeFeedProps> = ({ apiKey, channelId }) => {
   const [videos, setVideos] = useState<Video[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const URL = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&part=snippet&order=date&maxResults=10`
+
     fetch(
       URL
     ).then(res => res.json())
