@@ -26,7 +26,7 @@ const App = () => {
         }
     };
 
-    let isReady = apiKey && channelId;
+    const isReady = apiKey && channelId;
 
     useEffect(() => {
         fetchKey()

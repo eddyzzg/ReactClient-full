@@ -11,9 +11,6 @@ type Props = {
 };
 
 export default function SelectChannel({ onSubmit }: Props) {
- const strzyzewskiChannelId = 'UCI_J08LFR7uZrQ_h3Mtf4ZQ';
- const czukeskyChannelId = 'UCre35Pzn5DRY-zj2gQtp6bw';
-
   const options = [
     { label: 'Marcin Strzyżewski', id: 'UCI_J08LFR7uZrQ_h3Mtf4ZQ' },
     { label: 'Tomasz Czukiewski', id: 'UCre35Pzn5DRY-zj2gQtp6bw' },
