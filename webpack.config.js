@@ -1,5 +1,9 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   entry: './src/index.tsx',
@@ -18,6 +22,15 @@ module.exports = {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         use: 'babel-loader',
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        exclude: /\.module\.s[ac]ss$/,
+        use: [
+          'style-loader', // lub MiniCssExtractPlugin.loader w produkcji
+          'css-loader',
+          'sass-loader',
+        ],
       }
     ]
   },
@@ -31,5 +44,5 @@ module.exports = {
     port: 3000,
     open: true,
     hot: true,
-  },
+  }
 };
