@@ -206,6 +206,41 @@
     background-color: #181818;
   }
 
+   .filter-container {
+    .MuiFormControl-root {
+      background-color: #1e1e1e;
+    }
+
+    .MuiInputLabel-root {
+      color: #e0e0e0;
+    }
+
+    .MuiOutlinedInput-root {
+      color: #e0e0e0;
+
+      .MuiOutlinedInput-notchedOutline {
+        border-color: #444;
+      }
+
+      &:hover .MuiOutlinedInput-notchedOutline {
+        border-color: #666;
+      }
+
+      &.Mui-focused .MuiOutlinedInput-notchedOutline {
+        border-color: #90caf9;
+      }
+    }
+
+    .MuiSelect-select {
+      color: #e0e0e0;
+    }
+
+    .MuiPaper-root {
+      background-color: #2a2a2a;
+      color: #e0e0e0;
+    }
+  }
+
   .video-card {
     background-color: #222;
     border-bottom: 1px solid #444;

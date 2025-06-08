@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import YouTubeFeed from './YouTubeFeed';
-import './styles/App.scss';
+import './styles/app.scss';
+import './styles/loader.scss';
 import { Home, Video, Info, Mail, Moon, Sun } from 'lucide-react';
 import SelectChannel from './SelectChannel';
 
-const App = () => {
+export default function App() {
     const [menuOpen, setMenuOpen] = useState(false);
     const toggleMenu = () => setMenuOpen(!menuOpen);
     const [darkMode, setDarkMode] = useState(false);
@@ -32,7 +33,7 @@ const App = () => {
         fetchKey()
             .then(key => setApiKey(key))
             .catch(err => console.error(err));
-    }, []);
+    }, [darkMode]);
 
     return (
         <>
@@ -86,7 +87,6 @@ const App = () => {
 
 
                     <div className='main-container'>
-                        <h1>Ostatnie wideo:</h1>
                         {isReady ? <YouTubeFeed apiKey={apiKey} channelId={channelId}/> : <SelectChannel onSubmit={handleChannelSelect} />}
                     </div>
                 </main>
@@ -94,5 +94,3 @@ const App = () => {
         </>
     );
 };
-
-export default App;

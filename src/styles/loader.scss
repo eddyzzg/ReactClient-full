@@ -1,0 +1,59 @@
+/* Globalne zmienne lub override CSS variables */
+:root {
+  --fp-bg-light: rgba(255,255,255,0.8);
+  --fp-text-light: #333;
+  --fp-spinner-light: #3498db;
+
+  --fp-bg-dark: rgba(0,0,0,0.8);
+  --fp-text-dark: #eee;
+  --fp-spinner-dark: #90caf9;
+}
+
+/* Overlay pełnoekranowy */
+.fp-loader__overlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--fp-bg-light);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: background-color 0.3s;
+}
+
+/* Animowany spinner */
+.fp-loader__spinner {
+  width: 80px;
+  height: 80px;
+  border: 10px solid #f3f3f3;
+  border-top: 10px solid var(--fp-spinner-light);
+  border-radius: 50%;
+  animation: fp-spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+/* Tekst ładowania */
+.fp-loader__text {
+  font-size: 1.25rem;
+  color: var(--fp-text-light);
+}
+
+/* Obrót spinnera */
+@keyframes fp-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ---- dark-mode ---- */
+.dark {
+  .fp-loader__overlay {
+    background-color: var(--fp-bg-dark);
+  }
+  .fp-loader__spinner {
+    border-top-color: var(--fp-spinner-dark);
+  }
+  .fp-loader__text {
+    color: var(--fp-text-dark);
+  }
+}
