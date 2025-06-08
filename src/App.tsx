@@ -39,6 +39,10 @@ export default function App() {
             .catch(err => console.error(err));
     }, [darkMode]);
 
+    const handleMenuClick = () => {
+
+    };
+
     return (
         <>
             <div className={darkMode ? 'dark' : ''}>

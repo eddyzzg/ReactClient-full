@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import YouTubeFeedFilter from './YouTubeFeedFilter';
 import { useFullPageLoader } from './hooks/useFullPageLoader';
+import axios from 'axios';
+import { data } from 'react-router-dom';
 
 interface YouTubeFeedProps {
   apiKey: string;
@@ -32,10 +34,9 @@ export default function YouTubeFeed({ apiKey, channelId }: YouTubeFeedProps) {
     const URL = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}`
       + `&channelId=${channelId}&part=snippet&order=date&maxResults=${maxResult}`;
 
-    fetch(URL)
-      .then(res => res.json())
-      .then(data => {
-        setVideos(data.items);
+    axios.get(URL)
+      .then(res => {
+        setVideos(res.data.items);
         setLoading(false);
       })
       .catch(err => {
@@ -64,7 +65,7 @@ export default function YouTubeFeed({ apiKey, channelId }: YouTubeFeedProps) {
 
   return (
     <div>
-      <h1>Ostatnie wideo:</h1>
+      <h1>Ostatnie materiały na kanale:</h1>
       <div style={{ width: 200, padding: 16 }}>
         <YouTubeFeedFilter value={maxResult} onChange={handleFilterChange} />
       </div>
