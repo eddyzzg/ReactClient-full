@@ -16,7 +16,7 @@ body {
   .tweet-container {
     color: $tweet-text-color;
     display: flex;
-    
+
     &.centered-text {
       display: flex;
       justify-content: center; // poziome wyśrodkowanie
@@ -28,34 +28,21 @@ body {
   }
 
   .video-card {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 1rem;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 1rem;
 
-      &:hover {
-        background-color: #f9f9f9;
-        transition: background-color 0.2s;
-      }
+    &:hover {
+      background-color: #f9f9f9;
+      transition: background-color 0.2s;
     }
 
-    .video-thumbnail {
-      width: 200px;
-      height: auto;
-      border-radius: 8px;
-      flex-shrink: 0;
-      transition: transform 0.2s ease;
-
-      &:hover {
-        transform: scale(1.02);
-      }
-    }
-
-    .video-info {
+    &__video-info {
       flex: 1;
 
-      .video-title {
+      &__video-title {
         font-size: 1.1rem;
         margin: 0 0 0.5rem;
         color: #1a0dab;
@@ -66,14 +53,14 @@ body {
         }
       }
 
-      .video-description {
+      &__video-description {
         font-size: 0.95rem;
         color: #555;
         line-height: 1.4;
       }
     }
 
-    .video-frame {
+    &__video-frame {
       width: 320px;
       height: 180px;
       flex-shrink: 0;
@@ -85,6 +72,6 @@ body {
         border-radius: 8px;
       }
     }
+  }
+
 }
-
-

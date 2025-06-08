@@ -21,9 +21,6 @@ const App = () => {
       {tweetsData.map((tweet, index) => (
         <Tweet author={tweet.author} text={tweet.text} />
       ))}
-
-      <h1>Ostatnie wideo:</h1>
-      <YouTubeFeed/>
     </div>
   );
 };

@@ -11,6 +11,7 @@ export default function App() {
     const [darkMode, setDarkMode] = useState(false);
     const [apiKey, setApiKey] = useState<string>('');
     const [channelId, setChannelId] = useState<string>('');
+    const [userName, setUserName] = useState<string>();
 
     const fetchKey = async (): Promise<string> => {
         const response = await fetch('/GoogleAPIKey.txt');
@@ -21,9 +22,12 @@ export default function App() {
         return key.trim();
     };
 
-    const handleChannelSelect = (channel: { label: string; id: string }) => {
+    const handleChannelSelect = (channel: { label: string; id: string }, name: string) => {
         if (channel && channel.id) {
             setChannelId(channel.id);
+        }
+        if (name) {
+            setUserName(name);
         }
     };
 
@@ -39,7 +43,7 @@ export default function App() {
         <>
             <div className={darkMode ? 'dark' : ''}>
                 <header className="topbar">
-                    <div className="topbar__title">Ulubiony kanał na YT</div>
+                    <div className="topbar__title">Ulubiony kanał na YT {userName ? '(' + userName + ')' : ''}</div>
                     <div className="topbar__actions">
                         <button
                             className={`topbar__theme-toggle ${darkMode ? 'rotating' : ''}`}

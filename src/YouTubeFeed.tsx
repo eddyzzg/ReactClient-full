@@ -70,7 +70,7 @@ export default function YouTubeFeed({ apiKey, channelId }: YouTubeFeedProps) {
       </div>
       {videos.map((video, idx) => (
         <div className="video-card" key={idx}>
-          <div className="video-frame">
+          <div className="video-card__video-frame">
             <iframe
               src={`https://www.youtube.com/embed/${video.id.videoId}`}
               title={video.snippet.title}
@@ -78,9 +78,9 @@ export default function YouTubeFeed({ apiKey, channelId }: YouTubeFeedProps) {
               allowFullScreen
             />
           </div>
-          <div className="video-info">
-            <h3 className="video-title">{video.snippet.title}</h3>
-            <p className="video-description">{video.snippet.description}</p>
+          <div className="video-card__video-info">
+            <h3 className="video-card__video-info__video-title">{video.snippet.title}</h3>
+            <p className="video-card__video-info__video-description">{video.snippet.description}</p>
           </div>
         </div>
       ))}

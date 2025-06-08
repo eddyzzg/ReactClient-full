@@ -1,4 +1,3 @@
-/* Globalne zmienne lub override CSS variables */
 :root {
   --fp-bg-light: rgba(255,255,255,0.8);
   --fp-text-light: #333;
@@ -9,7 +8,6 @@
   --fp-spinner-dark: #90caf9;
 }
 
-/* Overlay pełnoekranowy */
 .fp-loader__overlay {
   position: fixed;
   inset: 0;
@@ -22,7 +20,6 @@
   transition: background-color 0.3s;
 }
 
-/* Animowany spinner */
 .fp-loader__spinner {
   width: 80px;
   height: 80px;
@@ -33,13 +30,11 @@
   margin-bottom: 16px;
 }
 
-/* Tekst ładowania */
 .fp-loader__text {
   font-size: 1.25rem;
   color: var(--fp-text-light);
 }
 
-/* Obrót spinnera */
 @keyframes fp-spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
