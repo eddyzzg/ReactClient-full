@@ -4,7 +4,7 @@ import './styles/loader.scss';
 
 //main import
 import React, { useState, useEffect, useCallback, Suspense, lazy } from 'react';
-import { Home as HomeIcon, Video, Info, Mail, Moon, Sun } from 'lucide-react';
+import { Home as HomeIcon, Video, Info, Mail, Moon, Sun, Pen } from 'lucide-react';
 import { NavLink, Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -21,9 +21,10 @@ export default function App() {
 
     //lazy subpages load
     const Home = lazy(() => import(/* webpackChunkName: "home" */ './pages/Home'));
-    const AboutPage  = lazy(() => import(/* webpackChunkName: "videos" */'./pages/AboutPage'));
-    const Videos = lazy(() => import(/* webpackChunkName: "about" */ './pages/Videos'));
+    const AboutPage = lazy(() => import(/* webpackChunkName: "aboutPage" */'./pages/AboutPage'));
+    const Videos = lazy(() => import(/* webpackChunkName: "videos" */ './pages/Videos'));
     const Contact = lazy(() => import(/* webpackChunkName: "contact" */ './pages/Contact'));
+    const RegistrationForm = lazy(() => import(/* webpackChunkName: "registrationForm" */ './pages/RegistrationPage'));
 
     const onSetTitle = useCallback((title: string, params: { name?: string, version?: string }) => {
         let nameVersionParam = '';
@@ -89,6 +90,11 @@ export default function App() {
                                     <Mail size={18} /> <span>Kontakt</span>
                                 </NavLink>
                             </li>
+                            <li>
+                                <NavLink to="/register" onClick={() => setMenuOpen(false)} className="flex items-center space-x-2 sidebar__register">
+                                    <Pen size={18} /> <span>Rejestracja</span>
+                                </NavLink>
+                            </li>
                         </ul>
                     </nav>
 
@@ -99,6 +105,7 @@ export default function App() {
                                 <Route path="/videos" element={<Videos onSetTitle={onSetTitle} />} />
                                 <Route path="/about" element={<AboutPage onSetTitle={onSetTitle} />} />
                                 <Route path="/contact" element={<Contact onSetTitle={onSetTitle} />} />
+                                <Route path="/register" element={<RegistrationForm onSetTitle={onSetTitle} />} />
                             </Routes>
                         </Suspense>
                     </div>

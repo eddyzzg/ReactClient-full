@@ -2,19 +2,11 @@ import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { useFullPageLoader } from '../hooks/useFullPageLoader';
 import axios from 'axios';
 import { data } from 'react-router-dom';
+import { Video } from '../_context/API';
 
 interface YouTubeFeedProps {
   apiKey: string;
   channelId: string;
-}
-
-interface Video {
-  id: { videoId: string };
-  snippet: {
-    title: string;
-    description: string;
-    thumbnails: { medium: { url: string } };
-  };
 }
 
 export default function YouTubeFeed({ apiKey, channelId }: YouTubeFeedProps) {
@@ -44,6 +36,8 @@ export default function YouTubeFeed({ apiKey, channelId }: YouTubeFeedProps) {
         setError(err.message);
         setLoading(false);
       })
+
+
   }, [apiKey, channelId, maxResult]);
 
   //dla loadera
