@@ -2,7 +2,7 @@ import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { useFullPageLoader } from '../hooks/useFullPageLoader';
 import axios from 'axios';
 import { data } from 'react-router-dom';
-import { Video } from '../_context/API';
+import { Video, getVideos } from '../_context/API';
 
 interface YouTubeFeedProps {
   apiKey: string;
@@ -20,23 +20,20 @@ export default function YouTubeFeed({ apiKey, channelId }: YouTubeFeedProps) {
 
   //dla fetch'a
   useEffect(() => {
+    async function fetchVideos() {
+      try {
+        const videos = await getVideos(apiKey, channelId, maxResult);
+        setVideos(videos);
+        setLoading(false);
+      } catch (err) {
+        setLoading(false);
+      }
+    }
+
     setLoading(true);
     setError(null);
     showLoader();
-
-    const URL = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}`
-      + `&channelId=${channelId}&part=snippet&order=date&maxResults=${maxResult}`;
-
-    axios.get(URL)
-      .then(res => {
-        setVideos(res.data.items);
-        setLoading(false);
-      })
-      .catch(err => {
-        setError(err.message);
-        setLoading(false);
-      })
-
+    fetchVideos();
 
   }, [apiKey, channelId, maxResult]);
 
