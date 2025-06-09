@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import YouTubeFeedFilter from './YouTubeFeedFilter';
-import { useFullPageLoader } from './hooks/useFullPageLoader';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
+import { useFullPageLoader } from '../hooks/useFullPageLoader';
 import axios from 'axios';
 import { data } from 'react-router-dom';
 
@@ -25,6 +24,8 @@ export default function YouTubeFeed({ apiKey, channelId }: YouTubeFeedProps) {
   const [maxResult, setMaxResult] = useState('10');
   const { showLoader, hideLoader, LoaderComponent } = useFullPageLoader();
 
+  const YouTubeFeedFilter = lazy(() => import(/* webpackChunkName: "YouTubeFeedFilter" */ './YouTubeFeedFilter'));
+
   //dla fetch'a
   useEffect(() => {
     setLoading(true);
@@ -42,7 +43,7 @@ export default function YouTubeFeed({ apiKey, channelId }: YouTubeFeedProps) {
       .catch(err => {
         setError(err.message);
         setLoading(false);
-      });
+      })
   }, [apiKey, channelId, maxResult]);
 
   //dla loadera
@@ -67,7 +68,9 @@ export default function YouTubeFeed({ apiKey, channelId }: YouTubeFeedProps) {
     <div>
       <h1>Ostatnie materiały na kanale:</h1>
       <div style={{ width: 200, padding: 16 }}>
-        <YouTubeFeedFilter value={maxResult} onChange={handleFilterChange} />
+        <Suspense fallback={<p className="page page--loading">Ładowanie...</p>}>
+          <YouTubeFeedFilter value={maxResult} onChange={handleFilterChange} />
+        </Suspense>
       </div>
       {videos.map((video, idx) => (
         <div className="video-card" key={idx}>

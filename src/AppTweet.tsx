@@ -1,6 +1,6 @@
 import React from 'react';
 import Tweet from './Tweet';
-import YouTubeFeed from './YouTubeFeed';
+import YouTubeFeed from './pages/YouTubeFeed';
 
 interface TweetData {
   author: string;

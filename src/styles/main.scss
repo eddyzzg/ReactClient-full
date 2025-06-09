@@ -1,12 +1,11 @@
+@use './variables.scss' as *; 
 $primary-color: #1d99ff;
 $text-color: #7c7c7c;
 $tweet-text-color: #9f9393;
 
 body {
-  background: #ffffff;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 16px;
-  color: $text-color;
+  background: $app-bg-color !important;
+  color: $main-tx-color !important;
 
   h1 {
     color: $primary-color;
@@ -19,8 +18,7 @@ body {
 
     &.centered-text {
       display: flex;
-      justify-content: center; // poziome wyśrodkowanie
-      // align-items: center;     // pionowe wyśrodkowanie
+      justify-content: center;
       height: 300px;
       width: 500px;
       text-align: center;

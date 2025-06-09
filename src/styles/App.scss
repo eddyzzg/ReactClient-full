@@ -1,3 +1,10 @@
+@use './variables.scss' as *;
+
+$top-bar-bg: #ebecf0;
+$top-bar-color: #9aa2b3;
+$sidebar-border-bottom-color: rgb(238, 238, 238);
+$sidebar-border-bottom-color-dark: rgb(50, 50, 50);
+
 /* --- Topbar --- */
 .topbar {
   position: fixed;
@@ -5,8 +12,8 @@
   left: 0;
   right: 0;
   height: 60px;
-  background-color: #ff0000c6; /* YouTube czerwony */
-  color: white;
+  background-color: $top-bar-bg;
+  color: $top-bar-color;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -38,6 +45,7 @@
     from {
       transform: rotate(0deg);
     }
+
     to {
       transform: rotate(180deg);
     }
@@ -50,6 +58,7 @@
     background: transparent;
     border-width: 0;
     cursor: pointer;
+    color: $top-bar-color;
 
     &.rotating svg {
       animation: rotate 0.3s ease;
@@ -60,9 +69,14 @@
     }
 
     &:hover svg {
-      color: #eeeeee; // złoty odcień przy hoverze
+      color: $secondary-main !important;
     }
   }
+}
+
+.subpage {
+  margin-top: 75px;
+  margin-left: 30px;
 }
 
 /* --- Hamburger --- */
@@ -77,18 +91,26 @@
   span {
     display: block;
     height: 3px;
-    background: white;
+    background: $top-bar-color;
     border-radius: 2px;
     transition: all 0.3s ease;
+  }
+
+  &:hover {
+    span {
+      background: $secondary-main !important;
+    }
   }
 
   &.open {
     span:nth-child(1) {
       transform: translateY(7.5px) rotate(45deg);
     }
+
     span:nth-child(2) {
       opacity: 0;
     }
+
     span:nth-child(3) {
       transform: translateY(-7.5px) rotate(-45deg);
     }
@@ -98,8 +120,10 @@
 /* --- Sidebar menu --- */
 .sidebar {
   position: fixed;
-  top: 60px; /* pod belką */
-  right: -237px; /* ukryty na start */
+  top: 60px;
+  /* pod belką */
+  right: -205px !important;
+  /* ukryty na start */
   width: 250px;
   height: calc(100vh - 60px);
   background: #fff;
@@ -109,7 +133,15 @@
   z-index: 999;
 
   &--open {
-    right: 0;
+    right: -70px !important;
+
+    ul {
+      li {
+        a {
+          margin-left: 26px;
+        }
+      }
+    }
   }
 
   ul {
@@ -117,17 +149,48 @@
     padding: 0;
 
     li {
-      margin-bottom: 1rem;
-      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      font-size: 1.3rem;
+      border-bottom: 1px solid $sidebar-border-bottom-color;
 
       a {
         color: #333;
         text-decoration: none;
-        font-weight: 600;
+        font-weight: 200;
 
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.7rem;
+
+        &.sidebar__home {
+          svg {
+            color: $secondary-light;
+          }
+        }
+
+        &.sidebar__videos {
+          svg {
+            color: $md-blue-300;
+          }
+        }
+
+        &.sidebar__about {
+          svg {
+            color: $warning-main;
+          }
+        }
+
+        &.sidebar__contact {
+          svg {
+            color: $md-pink-300;
+          }
+        }
+
+        &:hover {
+          svg {
+            color: $secondary-main !important;
+          }
+        }
 
         svg {
           color: #888;
@@ -151,11 +214,9 @@
 
 /* --- Main content --- */
 .main-content {
-  padding-top: 60px; /* żeby nie schował się pod belką */
   padding-left: 1rem;
   padding-right: 1rem;
   min-height: 100vh;
-  background: #fafafa;
 
   .enter-button-container {
     margin-top: 10px;
@@ -174,9 +235,9 @@
     box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
 
     &__theme-toggle {
-        &:hover svg {
-            color: red;
-        }
+      &:hover svg {
+        color: red;
+      }
     }
 
   }
@@ -188,6 +249,12 @@
 
   .sidebar {
     background-color: #1a1a1a;
+
+    ul {
+      li {
+        border-bottom: 1px solid $sidebar-border-bottom-color-dark;
+      }
+    }
 
     a {
       color: #f1f1f1;
@@ -206,11 +273,7 @@
     }
   }
 
-  .main-content {
-    background-color: #181818;
-  }
-
-   .filter-container {
+  .filter-container {
     .MuiFormControl-root {
       background-color: #1e1e1e;
     }

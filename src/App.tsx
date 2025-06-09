@@ -1,53 +1,53 @@
-import React, { useState, useEffect } from 'react';
-import YouTubeFeed from './YouTubeFeed';
+//styles
 import './styles/app.scss';
 import './styles/loader.scss';
-import { Home, Video, Info, Mail, Moon, Sun } from 'lucide-react';
-import SelectChannel from './SelectChannel';
+
+//main import
+import React, { useState, useEffect, useCallback, Suspense, lazy } from 'react';
+import { Home as HomeIcon, Video, Info, Mail, Moon, Sun } from 'lucide-react';
+import { NavLink, Routes, Route, BrowserRouter as Router } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { lightTheme, darkTheme } from './theme/theme';
 
 export default function App() {
     const [menuOpen, setMenuOpen] = useState(false);
     const toggleMenu = () => setMenuOpen(!menuOpen);
-    const [darkMode, setDarkMode] = useState(false);
-    const [apiKey, setApiKey] = useState<string>('');
-    const [channelId, setChannelId] = useState<string>('');
-    const [userName, setUserName] = useState<string>();
+    const [title, setTitle] = useState<string>();
+    const [darkMode, setDarkMode] = useState<boolean>(() => {
+        const isDarkMode = localStorage.getItem('darkMode');
+        return isDarkMode === 'true';
+    });
 
-    const fetchKey = async (): Promise<string> => {
-        const response = await fetch('/GoogleAPIKey.txt');
-        if (!response.ok) {
-            throw new Error('Nie udało się pobrać klucza');
-        }
-        const key = await response.text();
-        return key.trim();
-    };
+    //lazy subpages load
+    const Home = lazy(() => import(/* webpackChunkName: "home" */ './pages/Home'));
+    const AboutPage  = lazy(() => import(/* webpackChunkName: "videos" */'./pages/AboutPage'));
+    const Videos = lazy(() => import(/* webpackChunkName: "about" */ './pages/Videos'));
+    const Contact = lazy(() => import(/* webpackChunkName: "contact" */ './pages/Contact'));
 
-    const handleChannelSelect = (channel: { label: string; id: string }, name: string) => {
-        if (channel && channel.id) {
-            setChannelId(channel.id);
+    const onSetTitle = useCallback((title: string, params: { name?: string, version?: string }) => {
+        let nameVersionParam = '';
+        if (params) {
+            nameVersionParam = params.name ? `(${params.name} v.${params.version})` : '';
         }
-        if (name) {
-            setUserName(name);
-        }
-    };
-
-    const isReady = apiKey && channelId;
+        setTitle(`${title} ${nameVersionParam}`);
+    }, []);
 
     useEffect(() => {
-        fetchKey()
-            .then(key => setApiKey(key))
-            .catch(err => console.error(err));
+        if (darkMode) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        localStorage.setItem('darkMode', JSON.stringify(darkMode));
     }, [darkMode]);
 
-    const handleMenuClick = () => {
-
-    };
-
     return (
-        <>
+        <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+            <CssBaseline />
             <div className={darkMode ? 'dark' : ''}>
                 <header className="topbar">
-                    <div className="topbar__title">Ulubiony kanał na YT {userName ? '(' + userName + ')' : ''}</div>
+                    <div className="topbar__title">{title}</div>
                     <div className="topbar__actions">
                         <button
                             className={`topbar__theme-toggle ${darkMode ? 'rotating' : ''}`}
@@ -66,39 +66,44 @@ export default function App() {
                     </div>
                 </header>
 
-                <nav className={`sidebar ${menuOpen ? 'sidebar--open' : ''}`}>
-                    <ul>
-                        <li>
-                            <a href="#home" onClick={() => setMenuOpen(false)}>
-                                <Home size={18} /> <span>Home</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#videos" onClick={() => setMenuOpen(false)}>
-                                <Video size={18} /> <span>Filmy</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#about" onClick={() => setMenuOpen(false)}>
-                                <Info size={18} /> <span>O mnie</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#contact" onClick={() => setMenuOpen(false)}>
-                                <Mail size={18} /> <span>Kontakt</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                <Router>
+                    <nav className={`sidebar ${menuOpen ? 'sidebar--open' : ''} bg-gray-800 text-white p-4`}>
+                        <ul className="space-y-2">
+                            <li>
+                                <NavLink to="/" onClick={() => setMenuOpen(false)} className="flex items-center space-x-2 sidebar__home">
+                                    <HomeIcon size={18} /> <span>Home</span>
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/videos" onClick={() => setMenuOpen(false)} className="flex items-center space-x-2 sidebar__videos">
+                                    <Video size={18} /> <span>Filmy</span>
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/about" onClick={() => setMenuOpen(false)} className="flex items-center space-x-2 sidebar__about">
+                                    <Info size={18} /> <span>O mnie</span>
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/contact" onClick={() => setMenuOpen(false)} className="flex items-center space-x-2 sidebar__contact">
+                                    <Mail size={18} /> <span>Kontakt</span>
+                                </NavLink>
+                            </li>
+                        </ul>
+                    </nav>
 
-                <main className="main-content" onClick={() => menuOpen && setMenuOpen(false)}>
-
-
-                    <div className='main-container'>
-                        {isReady ? <YouTubeFeed apiKey={apiKey} channelId={channelId}/> : <SelectChannel onSubmit={handleChannelSelect} />}
+                    <div className="ml-0 md:ml-64">
+                        <Suspense fallback={<p className="page page--loading">Ładowanie...</p>}>
+                            <Routes>
+                                <Route path="/" element={<Home onSetTitle={onSetTitle} />} />
+                                <Route path="/videos" element={<Videos onSetTitle={onSetTitle} />} />
+                                <Route path="/about" element={<AboutPage onSetTitle={onSetTitle} />} />
+                                <Route path="/contact" element={<Contact onSetTitle={onSetTitle} />} />
+                            </Routes>
+                        </Suspense>
                     </div>
-                </main>
+                </Router>
             </div>
-        </>
+        </ThemeProvider>
     );
 };

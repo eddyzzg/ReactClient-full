@@ -7,7 +7,7 @@ interface Option {
 }
 
 type FormResult = {
-  onSubmit: (channel: { label: string; id: string }, name: string) => void;
+  onSubmit: (channel: { label: string; id: string }, name: string, version: string) => void;
 };
 
 export default function SelectChannel({ onSubmit }: FormResult) {
@@ -16,15 +16,17 @@ export default function SelectChannel({ onSubmit }: FormResult) {
     { label: 'Tomasz Czukiewski', id: 'UCre35Pzn5DRY-zj2gQtp6bw' },
   ];
   const defaultUserName = 'Bartek';
+  const defaultVersion = '1.0';
 
   const [channel, setSelected] = useState<Option | null>(null);
   const [name, setName] = useState(defaultUserName);
+  const [version, setVersion] = useState(defaultVersion);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (channel && name) {
-      onSubmit(channel, name);
+      onSubmit(channel, name, version);
     }
   };
 
@@ -36,6 +38,15 @@ export default function SelectChannel({ onSubmit }: FormResult) {
         fullWidth
         value={name}
         onChange={e => setName(e.target.value)}
+        required
+        sx={{ mb: 2 }}
+      />
+      <TextField
+        label="Wersja"
+        variant="outlined"
+        fullWidth
+        value={version}
+        onChange={e => setVersion(e.target.value)}
         required
         sx={{ mb: 2 }}
       />

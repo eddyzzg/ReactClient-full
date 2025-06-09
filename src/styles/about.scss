@@ -1,0 +1,40 @@
+@use './variables.scss' as *; 
+
+.page {
+    &__title {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    &__text {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+
+    &__tag {
+        background-color: $secondary-color;
+        color: $primary-color;
+        padding: 0.25rem 0.5rem;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        margin-right: 0.25rem;
+    }
+
+    &__list {
+        list-style: none;
+        padding-left: 0;
+
+        &-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+    }
+
+    &--loading,
+    &--error {
+        font-weight: bold;
+        color: $error-color;
+    }
+}
