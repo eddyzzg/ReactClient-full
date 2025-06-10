@@ -20,7 +20,7 @@ interface InputProps {
     onSetTitle: (title: string, props: { name: string, version: string }) => void;
 }
 
-export default function RegistrationPage({ onSetTitle }: InputProps) {
+export default function ContactFormPage({ onSetTitle }: InputProps) {
     const subPageTitle = 'Formularz rejestracyjny';
     const { handleSubmit, control, register, formState: { errors } } = useForm<FormValues>();
 

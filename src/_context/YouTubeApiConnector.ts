@@ -11,7 +11,7 @@ export function createApiClient(apiKey: string, channelId: string, maxResult: st
     });
 
     YTConnector.interceptors.request.use((config) => {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('token-yt');
         if (token && config.headers) {
             config.headers.Authorization = `Bearer ${token}`;
         }

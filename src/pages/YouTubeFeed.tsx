@@ -9,14 +9,14 @@ interface YouTubeFeedProps {
   channelId: string;
 }
 
+const YouTubeFeedFilter = lazy(() => import(/* webpackChunkName: "YouTubeFeedFilter" */ './YouTubeFeedFilter'));
+
 export default function YouTubeFeed({ apiKey, channelId }: YouTubeFeedProps) {
   const [videos, setVideos] = useState<Video[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [maxResult, setMaxResult] = useState('10');
   const { showLoader, hideLoader, LoaderComponent } = useFullPageLoader();
-
-  const YouTubeFeedFilter = lazy(() => import(/* webpackChunkName: "YouTubeFeedFilter" */ './YouTubeFeedFilter'));
 
   //dla fetch'a
   useEffect(() => {
@@ -27,6 +27,7 @@ export default function YouTubeFeed({ apiKey, channelId }: YouTubeFeedProps) {
         setLoading(false);
       } catch (err) {
         setLoading(false);
+        setError(err instanceof Error ? err.message : String(err));
       }
     }
 
