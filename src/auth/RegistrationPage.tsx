@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { registerUser } from '../_context/AuthConnector';
+import { useNavigate } from 'react-router-dom';
 
 type RegistrationFormValues = {
     username: string;
@@ -18,7 +19,7 @@ export default function RegistrationPage({ onSetTitle }: InputProps) {
     const { register, handleSubmit, watch, formState: { errors } } = useForm<RegistrationFormValues>();
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<boolean>(false);
-
+    const navigate = useNavigate();
     onSetTitle('Rejestracja', { name: '', version: '' });
 
     const onSubmit = async (data: RegistrationFormValues) => {
@@ -31,6 +32,7 @@ export default function RegistrationPage({ onSetTitle }: InputProps) {
         try {
             await registerUser(data.username, data.email, data.password);
             setSuccess(true);
+            navigate('/');
 
         } catch (err: any) {
             setError(err.response?.data?.message || 'Błąd rejestracji');
