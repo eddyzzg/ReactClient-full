@@ -10,9 +10,7 @@ export interface RegisterResponse {
 }
 
 export const loginUser = async (email: string, password: string): Promise<string> => {
-    console.log('no jestem w tej metodzie...')
     const res = await apiClient.post<LoginResponse>('/login', { email, password });
-    console.log('wykonalem post...')
     return res.data.token;
 };
 
