@@ -1,4 +1,5 @@
 import apiClient from './ServerConnector';
+import apiClientJava from './ServerConnectorJava';
 import { createApiClient } from './YouTubeApiConnector';
 
 // ---- Subject dictionary ---- /
@@ -9,6 +10,13 @@ export interface Subject {
 }
 export const getSubjects = (): Promise<Subject[]> =>
     apiClient.get<Subject[]>('/subjects').then(res => res.data);
+
+export const getSubjectsFromJava = (): Promise<Subject[]> => {
+    return apiClientJava.get<Subject[]>('/api/subjects').then((res) => {
+        return res.data;
+    });
+}
+
 
 
 // ---- User dictionary ----/

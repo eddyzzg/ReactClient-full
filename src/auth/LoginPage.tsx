@@ -73,7 +73,7 @@ export default function LoginPage({ onSetTitle }: InputProps) {
                 helperText={errors.password?.message}
             />
 
-            <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
+            <Button type="submit" variant="contained" color="primary" sx={{ mt: 2, mr: 2 }}>
                 Wyślij
             </Button>
             <Button type="submit" variant="contained" color="warning" onClick={() => handelGoToRegisterPage()} sx={{ mt: 2 }}>

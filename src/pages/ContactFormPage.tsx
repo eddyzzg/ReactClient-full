@@ -7,7 +7,7 @@ import {
     Box
 } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
-import { Subject, getSubjects } from '../_context/API';
+import { Subject, getSubjects, getSubjectsFromJava } from '../_context/API';
 
 type FormValues = {
     name: string;
@@ -29,7 +29,8 @@ export default function ContactFormPage({ onSetTitle }: InputProps) {
 
     useEffect(() => {
         onSetTitle(subPageTitle, { name: '', version: '' });
-        getSubjects().then(setSubjects).catch(console.error);
+        // getSubjects().then(setSubjects).catch(console.error);
+        getSubjectsFromJava().then(setSubjects).catch(console.error);
     }, []);
 
     const onSubmit = (data: FormValues) => {
