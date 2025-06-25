@@ -27,10 +27,29 @@ export default function ContactFormPage({ onSetTitle }: InputProps) {
     const [subjects, setSubjects] = useState<Subject[]>([]);
     const [error, setError] = useState(null);
 
+    // lazy loading for subjects
+    const [subjectsLoaded, setSubjectsLoaded] = useState(false);
+
+    const getSubjectsFromBackend = () => {
+        // return getSubjects();
+        return getSubjectsFromJava();
+    };
+
+    const loadSubjects = () => {
+        if (!subjectsLoaded) {
+            getSubjectsFromBackend().then((data) => {
+                setSubjects(data);
+                setSubjectsLoaded(true);
+            }).catch((err) => {
+                console.log(err);
+                setError(err);
+            })
+        }
+    }
+
     useEffect(() => {
         onSetTitle(subPageTitle, { name: '', version: '' });
-        // getSubjects().then(setSubjects).catch(console.error);
-        getSubjectsFromJava().then(setSubjects).catch(console.error);
+        loadSubjects();
     }, []);
 
     const onSubmit = (data: FormValues) => {
@@ -80,6 +99,7 @@ export default function ContactFormPage({ onSetTitle }: InputProps) {
                         {...field}
                         error={!!errors.subject}
                         helperText={errors.subject?.message}
+                        onFocus={loadSubjects}
                     >
                         {subjects.map((option) => (
                             <MenuItem key={option.label} value={option.label}>
